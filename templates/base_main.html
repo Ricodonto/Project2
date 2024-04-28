@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css">
-    <title>{%block content%} {%endblock%}</title>
+    <title>{%block title%} {%endblock%}</title>
 </head>
 <body>
     <nav>
@@ -12,7 +12,7 @@
             <li><a href="#accounts">Accounts</a></li>
             <li><a href="#reports">Reports</a></li>
             <li><a href="#forms">Forms</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="/about">About</a></li>
         </ul>
     </nav>
     {% block content %}

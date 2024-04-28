@@ -8,13 +8,14 @@ routes = Blueprint( __name__, "routes", static_folder="static", template_folder=
 def login():
     return render_template("login.html")
 
-@routes.route('/<user>')
-def usr(usr):
-    return render_template("test.html", usr=usr)
 
 @routes.route('/')
 def test():
-    return render_template("index2.html")
+    return render_template("table.html")
+
+@routes.route('/about')
+def about():
+    return "This is the about page"
 
 # @routes.route('/home')
 # def home():
