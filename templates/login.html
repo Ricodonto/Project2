@@ -1,10 +1,20 @@
-{% extends "test_template.html" %}
-{% block title%}Login Page{% endblock%}
+{% extends "base_login.html" %}
 
-{% block content %}
-<h2>Log in</h2>
-<form action="#" method="POST"></form>
-    <p>Name:</p>
-    <p><input type="text" name="nm"></p>
-    <p><input type="submit" value="submit"></p>
-{% endblock %}
+{%block title %} Login {%endblock%}
+
+{%block content%}
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="login.php" method="post">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+{%endblock%}
