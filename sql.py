@@ -17,18 +17,24 @@ connection_string = f"""
     pwd=test;
 """
 
-conn = odbc.connect(connection_string, autocommit=True)
-print(conn)
+try:
+    conn = odbc.connect(connection_string, autocommit=True)
+    print(conn)
+except odbc.DatabaseError:
+    print("login information incorrect")
+    exit()
 
+conn = odbc.connect(connection_string, autocommit=True)
 cursor = conn.cursor()
 
 SQL_STATEMENT = """
-insert into test(ID, CarName) 
-values('2', 'Prius');
+ALTER TABLE officials
+ALTER COLUMN official_id int;
 """
-cursor.execute("select * from test;")
+
+# select * from officials;
+cursor.execute(SQL_STATEMENT)
 rows = cursor.fetchall()
 
 for row in rows:
-    uid, carname, city, salary = row
-    print(uid)
+    print(row)

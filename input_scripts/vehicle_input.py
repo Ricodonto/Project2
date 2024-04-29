@@ -1,5 +1,33 @@
+import pypyodbc as odbc
 import random
 import string
+# 'ODBC Driver 17 for SQL Server'
+# 'SQL SERVER'
+DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
+SERVER_NAME = r'LAPTOP-KICEGSLT\SQLEXPRESS01'
+DATABASE_NAME = 'carpooling'
+
+# uid=<username>;
+# pwd=<password>;
+
+connection_string = f"""
+    DRIVER={{{DRIVER_NAME}}};
+    SERVER={SERVER_NAME};
+    DATABASE={DATABASE_NAME};
+    Trust_Connection=yes;
+    uid=Rico;
+    pwd=test;
+"""
+
+try:
+    conn = odbc.connect(connection_string, autocommit=True)
+    print(conn)
+except odbc.DatabaseError:
+    print("login information incorrect")
+    exit()
+
+conn = odbc.connect(connection_string, autocommit=True)
+cursor = conn.cursor()
 
 
 def generate_license_plate():
@@ -39,6 +67,23 @@ def generate_str(data):
         values.append(value)
     return values
 
-# Print the generated data
-for item in data:
-    print(type(item))
+SQL_STATEMENT = """
+INSERT INTO vehicle(vehicle_id, number_plate, vstatus, capacity)
+VALUES 
+"""
+
+for item in generate_str(data):
+    SQL_STATEMENT = SQL_STATEMENT + item
+
+# SQL_STATEMENT = """
+# select * from vehicle;
+# """
+
+# select * from officials;
+cursor.execute(SQL_STATEMENT)
+
+conn.commit()
+# rows = cursor.fetchall()
+
+# for row in rows:
+#     print(row)

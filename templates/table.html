@@ -7,27 +7,24 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th>Official ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Phone number</th>
                     <th>Email</th>
                 </tr>
             </thead>
             <tbody>
+                {% for row in rows %}
                 <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>john@example.com</td>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jane Smith</td>
-                    <td>jane@example.com</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Michael Johnson</td>
-                    <td>michael@example.com</td>
-                </tr>
+                {%endfor%}
+
             </tbody>
         </table>
     </div>
