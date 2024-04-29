@@ -59,8 +59,9 @@ def test1():
 
     for row in rows:
         print(row[1])
-        
-    return render_template("table.html", rows=rows)
+    
+    table_headers = ['Official ID', 'First name', 'Last name', 'Phone number', 'Email']
+    return render_template("table.html", rows=rows, table_headers=table_headers)
 
 
 

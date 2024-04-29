@@ -7,11 +7,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Official ID</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Phone number</th>
-                    <th>Email</th>
+                    {% for header in table_headers%}
+                    <th>{{header}}</th>
+                    {%endfor%}
                 </tr>
             </thead>
             <tbody>
