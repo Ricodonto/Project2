@@ -6,7 +6,7 @@ import pypyodbc as odbc
 # 'ODBC Driver 17 for SQL Server'
 # 'SQL SERVER'
 DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
-SERVER_NAME = r'LAPTOP-KICEGSLT'
+SERVER_NAME = r'DESKTOP-5IS51HK'
 DATABASE_NAME = 'carpooling'
 
 # uid=<username>;
@@ -14,6 +14,13 @@ DATABASE_NAME = 'carpooling'
 
 routes = Blueprint( __name__, "routes", static_folder="static", template_folder="templates")
 
+
+@routes.route('/')
+def landing():
+    if "user" in session:
+        return render_template("landing.html")
+    else:
+        return redirect(url_for("routes.login"))
 
 @routes.route('/login', methods=['GET', 'POST'])
 def login():
@@ -39,10 +46,10 @@ def login():
 
         print(session['cnxn_str'])
         session['user'] = username
-        return redirect(url_for("routes.test1"))
+        return redirect(url_for("routes.landing"))
     else:
         if 'user' in session:
-            return redirect(url_for("routes.user"))
+            return redirect(url_for("routes.landing"))
         return render_template("login.html")
 
 @routes.route('/test1')

@@ -3,6 +3,7 @@
 {%block title%} Tables {%endblock%}
 
 {%block content%}
+    <h1>{{tb_name}}</h1>
     <div class="table-container">
         <table>
             <thead>
@@ -15,11 +16,9 @@
             <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td>{{row[0]}}</td>
-                    <td>{{row[1]}}</td>
-                    <td>{{row[2]}}</td>
-                    <td>{{row[3]}}</td>
-                    <td>{{row[4]}}</td>
+                    {% for i in range(size)%}
+                    <td>{{row[i]}}</td>
+                    {%endfor%}
                 </tr>
                 {%endfor%}
 

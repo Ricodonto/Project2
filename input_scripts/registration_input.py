@@ -4,7 +4,7 @@ import string
 # 'ODBC Driver 17 for SQL Server'
 # 'SQL SERVER'
 DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
-SERVER_NAME = r'LAPTOP-KICEGSLT'
+SERVER_NAME = r'DESKTOP-5IS51HK'
 DATABASE_NAME = 'carpooling'
 
 # uid=<username>;
@@ -44,18 +44,19 @@ def generate_name():
 
 def generate_data():
     data = []
-    group = random.choices(range(1,7), 20)
-    amount = random.choices([500, 1000, 600, 900], 20)
-    monthly = random.choices([500, 1000, 600, 900], 20)
+    group = random.choices(range(1,7), k=20)
+    amount = random.choices([500, 1000, 600, 900], k=20)
+    monthly = random.choices([500, 1000, 600, 900], k=20)
     for i in range(1, 21):
         first_name, last_name = generate_name()
         phone_number = generate_phone_number()
         email = f"{first_name.lower()}.{last_name.lower()}@sample.com"
-        data.append((i, first_name, last_name, phone_number, email, group[i-1], amount[i-1], monthly))
+        data.append((i, first_name, last_name, phone_number, email, group[i-1], amount[i-1], monthly[i-1]))
     return data
 
 # Generate data
 data = generate_data()
+print(data)
 
 def generate_str(data):
     values = []

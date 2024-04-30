@@ -4,13 +4,17 @@ import pypyodbc as odbc
 
 tables = Blueprint( __name__, "tables", static_folder="static", template_folder="templates")
 
-@tables.route('/officials')
-def officials():
+@tables.route('/')
+def table_landing():
+    return render_template("tables.html")
+
+@tables.route('/official')
+def official():
     cnxn_str = session['cnxn_str']
     conn = odbc.connect(cnxn_str, autocommit=True)
     cursor = conn.cursor()
     SQL_STATEMENT = """
-    select * from officials
+    select * from official
     """
 
     cursor.execute(SQL_STATEMENT)
@@ -20,10 +24,10 @@ def officials():
         print(row[1])
     
     table_headers = ['Official ID', 'First name', 'Last name', 'Phone number', 'Email']
-    return render_template("table.html", rows=rows, table_headers=table_headers)
+    return render_template("table.html", rows=rows, table_headers=table_headers, size=len(rows[0]), tb_name='Officials Table')
 
 @tables.route('/vehicle')
-def vehicles():
+def vehicle():
     cnxn_str = session['cnxn_str']
     conn = odbc.connect(cnxn_str, autocommit=True)
     cursor = conn.cursor()
@@ -38,11 +42,11 @@ def vehicles():
         print(row[1])
     
     table_headers = ['Vehicle ID', 'Number plate', 'Vehicle status', 'Capacity']
-    return render_template("table.html", rows=rows, table_headers=table_headers)
+    return render_template("table.html", rows=rows, table_headers=table_headers, size=len(rows[0]), tb_name='Vehicles Table')
 
 
 @tables.route('/carroute')
-def vehicles():
+def carroute():
     cnxn_str = session['cnxn_str']
     conn = odbc.connect(cnxn_str, autocommit=True)
     cursor = conn.cursor()
@@ -57,10 +61,10 @@ def vehicles():
         print(row[1])
     
     table_headers = ['Route ID', 'car_route']
-    return render_template("table.html", rows=rows, table_headers=table_headers)
+    return render_template("table.html", rows=rows, table_headers=table_headers, size=len(rows[0]), tb_name='Car Routes Table')
 
 @tables.route('/drivers')
-def vehicles():
+def drivers():
     cnxn_str = session['cnxn_str']
     conn = odbc.connect(cnxn_str, autocommit=True)
     cursor = conn.cursor()
@@ -74,16 +78,16 @@ def vehicles():
     for row in rows:
         print(row[1])
     
-    table_headers = ['Driver ID', 'First Name', 'Last Name', 'Vehicle ID', 'Official ID']
-    return render_template("table.html", rows=rows, table_headers=table_headers)
+    table_headers = ['Driver ID', 'First Name', 'Last Name', 'Email', 'Vehicle ID', 'Official ID']
+    return render_template("table.html", rows=rows, table_headers=table_headers, size=len(rows[0]), tb_name='Drivers Table')
 
-@tables.route('/vehicle')
-def vehicles():
+@tables.route('/comments')
+def comments():
     cnxn_str = session['cnxn_str']
     conn = odbc.connect(cnxn_str, autocommit=True)
     cursor = conn.cursor()
     SQL_STATEMENT = """
-    select * from vehicle
+    select * from comments
     """
 
     cursor.execute(SQL_STATEMENT)
@@ -92,16 +96,16 @@ def vehicles():
     for row in rows:
         print(row[1])
     
-    table_headers = ['Vehicle ID', 'Number plate', 'Vehicle status', 'Capacity']
-    return render_template("table.html", rows=rows, table_headers=table_headers)
+    table_headers = ['Comment ID', 'Comment', 'Date Submitted', 'Driver ID', 'Official ID']
+    return render_template("table.html", rows=rows, table_headers=table_headers, size=len(rows[0]), tb_name='Comments Table')
 
-@tables.route('/vehicle')
-def vehicles():
+@tables.route('/cargroup')
+def cargroup():
     cnxn_str = session['cnxn_str']
     conn = odbc.connect(cnxn_str, autocommit=True)
     cursor = conn.cursor()
     SQL_STATEMENT = """
-    select * from vehicle
+    select * from car_group
     """
 
     cursor.execute(SQL_STATEMENT)
@@ -110,5 +114,23 @@ def vehicles():
     for row in rows:
         print(row[1])
     
-    table_headers = ['Vehicle ID', 'Number plate', 'Vehicle status', 'Capacity']
-    return render_template("table.html", rows=rows, table_headers=table_headers)
+    table_headers = ['Group ID', 'Route ID', 'Pickup time', 'Driver ID', 'Car Route']
+    return render_template("table.html", rows=rows, table_headers=table_headers, size=len(rows[0]), tb_name='Car Groups Table')
+
+@tables.route('/registration')
+def registration():
+    cnxn_str = session['cnxn_str']
+    conn = odbc.connect(cnxn_str, autocommit=True)
+    cursor = conn.cursor()
+    SQL_STATEMENT = """
+    select * from registration
+    """
+
+    cursor.execute(SQL_STATEMENT)
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print(row)
+    
+    table_headers = ['Reg ID', 'First Name', 'Last Name', 'Phone Number', 'Email', 'Group ID', 'Amount Paid', 'Monthly contribution']
+    return render_template("table.html", rows=rows, table_headers=table_headers, size=len(rows[0]), tb_name='Registration Table')

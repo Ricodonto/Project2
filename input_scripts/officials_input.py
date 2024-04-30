@@ -4,9 +4,8 @@ import string
 # 'ODBC Driver 17 for SQL Server'
 # 'SQL SERVER'
 DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
-SERVER_NAME = r'LAPTOP-KICEGSLT'
+SERVER_NAME = r'DESKTOP-5IS51HK'
 DATABASE_NAME = 'carpooling'
-
 # uid=<username>;
 # pwd=<password>;
 

@@ -1,0 +1,16 @@
+{%extends "base_main.html"%}
+
+{%block title%} Tables {%endblock%}
+
+{% block content %}
+<div class="button-container">
+    <div class="button-box">
+        <a href="{{url_for('views.schedule')}}"><button>Schedule View</button></a>
+        <a href="{{url_for('views.owed')}}"><button>Owed View</button></a>
+        <a href="{{url_for('views.monthly')}}"><button>Monthly Contribution View</button></a>
+        <a href="{{url_for('views.members')}}"><button>Members View</button></a>
+        <a href="{{url_for('views.fine')}}"><button>Fine View</button></a>
+        <a href="{{url_for('views.broken')}}"><button>Broken Vehicles View</button></a>
+    </div>
+</div>
+{%endblock%}
