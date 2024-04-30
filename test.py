@@ -42,3 +42,6 @@ def generate_str(data):
 # Print the generated data
 for item in data:
     print(type(item))
+
+for _ in range(1,21):
+    print(_)

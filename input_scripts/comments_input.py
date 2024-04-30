@@ -1,6 +1,7 @@
 import pypyodbc as odbc
 import random
 import string
+from datetime import datetime, timedelta
 # 'ODBC Driver 17 for SQL Server'
 # 'SQL SERVER'
 DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
@@ -30,25 +31,29 @@ conn = odbc.connect(connection_string, autocommit=True)
 cursor = conn.cursor()
 
 
-def generate_phone_number():
-    # Generate a random phone number starting with '07' or '01'
-    start = random.choice(['07', '01'])
-    rest = ''.join(random.choices(string.digits, k=8))
-    return start + rest
+def random_index():
+    l = random.sample(range(1,21), 20)
+    return l
 
-def generate_name():
-    # Generate random first and last names
-    first_names = ['John', 'Emma', 'Michael', 'Sophia', 'Matthew', 'Olivia', 'William', 'Ava', 'James', 'Isabella']
-    last_names = ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor']
-    return random.choice(first_names), random.choice(last_names)
+def generate_date():
+    # Generate a random date between 7th April and 18th April
+    start_date = datetime(2024, 4, 7)
+    end_date = datetime(2024, 4, 18)
+    random_date = start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
+    return random_date.strftime('%d/%m/%Y')
+
+def generate_comment():
+    # Generate a random status: 'AVAILABLE' or 'BROKEN DOWN'
+    return random.choice(['Scratching', ' Delay', 'Aggresive', 'Driving under the influence'])
 
 def generate_data():
     data = []
-    for i in range(1, 21):
-        first_name, last_name = generate_name()
-        phone_number = generate_phone_number()
-        email = f"{first_name.lower()}.{last_name.lower()}@sample.com"
-        data.append((i, first_name, last_name, phone_number, email))
+    driver = random_index()
+    official = random_index()
+    for i in range(1, 6):
+        date = generate_date()
+        comment = generate_comment()
+        data.append((i, comment, date, driver[i-1], official[i-1]))
     return data
 
 # Generate data
@@ -64,22 +69,22 @@ def generate_str(data):
         values.append(value)
     return values
 
+for item in data:
+    print(item)
+
 SQL_STATEMENT = """
-INSERT INTO official(official_id, fname, lname, phone_number, email)
+INSERT INTO comments(comment_id, comment, date_submitted, driver_id, official_id)
 VALUES 
 """
 
 for item in generate_str(data):
     SQL_STATEMENT = SQL_STATEMENT + item
 
-# SQL_STATEMENT = """
-# select * from officials;
-# """
+# # SQL_STATEMENT = """
+# # select * from officials;
+# # """
 
-# select * from officials;
+# # select * from officials;
 cursor.execute(SQL_STATEMENT)
 
-# rows = cursor.fetchall()
-
-# for row in rows:
-#     print(row)
+cursor.commit()

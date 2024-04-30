@@ -4,7 +4,7 @@ import string
 # 'ODBC Driver 17 for SQL Server'
 # 'SQL SERVER'
 DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
-SERVER_NAME = r'LAPTOP-KICEGSLT\SQLEXPRESS01'
+SERVER_NAME = r'LAPTOP-KICEGSLT'
 DATABASE_NAME = 'carpooling'
 
 # uid=<username>;
@@ -37,6 +37,13 @@ def generate_license_plate():
     last_letter = random.choice(string.ascii_uppercase)
     return f"K{letters}{numbers}{last_letter}"
 
+def generate_route():
+    # Generate a random route: two random locations separated by a hyphen
+    locations = ['Kajiado', 'Kisumu', 'Kiambu', 'Machakos', 'Nyeri']
+    start = random.choice(locations)
+
+    return f"Nairobi-{location}"
+
 def generate_status():
     # Generate a random status: 'AVAILABLE' or 'BROKEN DOWN'
     return random.choice(['AVAILABLE', 'BROKEN DOWN'])
@@ -47,11 +54,11 @@ def generate_capacity():
 
 def generate_data():
     data = []
-    for i in range(1, 21):
-        license_plate = generate_license_plate()
-        status = generate_status()
-        capacity = generate_capacity()
-        data.append((i, license_plate, status, capacity))
+    location = ['Kajiado', 'Kisumu', 'Kiambu', 'Machakos', 'Nyeri']
+    for i in range(1,6):
+        start = 'Nairobi'
+        route = f"{start}-{location[i-1]}"
+        data.append((i, route))
     return data
 
 # Generate data
@@ -68,7 +75,7 @@ def generate_str(data):
     return values
 
 SQL_STATEMENT = """
-INSERT INTO vehicle(vehicle_id, number_plate, vstatus, capacity)
+INSERT INTO car_route(route_id, car_route)
 VALUES 
 """
 
@@ -78,6 +85,8 @@ for item in generate_str(data):
 # SQL_STATEMENT = """
 # select * from vehicle;
 # """
+
+print(SQL_STATEMENT)
 
 # select * from officials;
 cursor.execute(SQL_STATEMENT)

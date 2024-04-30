@@ -4,7 +4,7 @@ import string
 # 'ODBC Driver 17 for SQL Server'
 # 'SQL SERVER'
 DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
-SERVER_NAME = r'LAPTOP-KICEGSLT\SQLEXPRESS01'
+SERVER_NAME = r'LAPTOP-KICEGSLT'
 DATABASE_NAME = 'carpooling'
 
 # uid=<username>;
@@ -47,7 +47,7 @@ def generate_capacity():
 
 def generate_data():
     data = []
-    for i in range(1, 21):
+    for i in range(1, 6):
         license_plate = generate_license_plate()
         status = generate_status()
         capacity = generate_capacity()

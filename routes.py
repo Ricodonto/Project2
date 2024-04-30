@@ -6,7 +6,7 @@ import pypyodbc as odbc
 # 'ODBC Driver 17 for SQL Server'
 # 'SQL SERVER'
 DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
-SERVER_NAME = r'LAPTOP-KICEGSLT\SQLEXPRESS01'
+SERVER_NAME = r'LAPTOP-KICEGSLT'
 DATABASE_NAME = 'carpooling'
 
 # uid=<username>;

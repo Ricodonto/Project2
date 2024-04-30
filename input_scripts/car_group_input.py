@@ -1,6 +1,5 @@
 import pypyodbc as odbc
 import random
-import string
 # 'ODBC Driver 17 for SQL Server'
 # 'SQL SERVER'
 DRIVER_NAME = 'ODBC Driver 17 for SQL Server'
@@ -30,11 +29,11 @@ conn = odbc.connect(connection_string, autocommit=True)
 cursor = conn.cursor()
 
 
-def generate_phone_number():
-    # Generate a random phone number starting with '07' or '01'
-    start = random.choice(['07', '01'])
-    rest = ''.join(random.choices(string.digits, k=8))
-    return start + rest
+def random_index(r):
+    l = random.sample(range(1,r+1), 20)
+    return l
+
+
 
 def generate_name():
     # Generate random first and last names
@@ -42,17 +41,31 @@ def generate_name():
     last_names = ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor']
     return random.choice(first_names), random.choice(last_names)
 
-def generate_data():
+SQL_STATEMENT = """
+select car_route from car_route;
+"""
+
+l_route = cursor.execute(SQL_STATEMENT)
+
+car_route = []
+
+for tup in l_route:
+    car_route.append(tup[0])
+
+def generate_data(car_route):
     data = []
+    route = random_index(5)
+    driver = random_index(20)
+    c_route = random.choices(car_route, 20)
+    pickuptime = random.sample(['08:00', '09:00', '10:00'], 20)
     for i in range(1, 21):
         first_name, last_name = generate_name()
-        phone_number = generate_phone_number()
         email = f"{first_name.lower()}.{last_name.lower()}@sample.com"
-        data.append((i, first_name, last_name, phone_number, email))
+        data.append((i, route[i-1], pickuptime[i-1], email, driver[i-1], c_route[i-1]))
     return data
 
 # Generate data
-data = generate_data()
+data = generate_data(car_route)
 
 def generate_str(data):
     values = []
@@ -64,22 +77,22 @@ def generate_str(data):
         values.append(value)
     return values
 
+for item in data:
+    print(item)
+
 SQL_STATEMENT = """
-INSERT INTO official(official_id, fname, lname, phone_number, email)
+INSERT INTO car_group(group_id, route_id, pickuptime, driver_id, car_route)
 VALUES 
 """
 
 for item in generate_str(data):
     SQL_STATEMENT = SQL_STATEMENT + item
 
-# SQL_STATEMENT = """
-# select * from officials;
-# """
+# # SQL_STATEMENT = """
+# # select * from officials;
+# # """
 
-# select * from officials;
+# # select * from officials;
 cursor.execute(SQL_STATEMENT)
 
-# rows = cursor.fetchall()
-
-# for row in rows:
-#     print(row)
+cursor.commit()

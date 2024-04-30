@@ -44,11 +44,14 @@ def generate_name():
 
 def generate_data():
     data = []
+    group = random.choices(range(1,7), 20)
+    amount = random.choices([500, 1000, 600, 900], 20)
+    monthly = random.choices([500, 1000, 600, 900], 20)
     for i in range(1, 21):
         first_name, last_name = generate_name()
         phone_number = generate_phone_number()
         email = f"{first_name.lower()}.{last_name.lower()}@sample.com"
-        data.append((i, first_name, last_name, phone_number, email))
+        data.append((i, first_name, last_name, phone_number, email, group[i-1], amount[i-1], monthly))
     return data
 
 # Generate data
@@ -65,7 +68,7 @@ def generate_str(data):
     return values
 
 SQL_STATEMENT = """
-INSERT INTO official(official_id, fname, lname, phone_number, email)
+INSERT INTO registration(reg_id, fname, lname, phone_number, email, group_id, amount_paid, monthly_contribution)
 VALUES 
 """
 
