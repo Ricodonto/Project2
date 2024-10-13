@@ -52,68 +52,15 @@ def login():
             return redirect(url_for("routes.landing"))
         return render_template("login.html")
 
-@routes.route('/test1')
-def test1():
-    cnxn_str = session['cnxn_str']
-    conn = odbc.connect(cnxn_str, autocommit=True)
-    cursor = conn.cursor()
-    SQL_STATEMENT = """
-    select * from officials
-    """
-
-    cursor.execute(SQL_STATEMENT)
-    rows = cursor.fetchall()
-
-    for row in rows:
-        print(row[1])
-    
-    table_headers = ['Official ID', 'First name', 'Last name', 'Phone number', 'Email']
-    return render_template("table.html", rows=rows, table_headers=table_headers)
-
-
-
-@routes.route('/')
-def test():
-    return render_template("table.html")
-
-# The name of the parameter in the def function should be the same as the name in the <>
-@routes.route('/user')
-def user():
-    if "user" in session:
-        return session['user']
-    else:
-        return redirect(url_for('routes.login'))
-
-@routes.route('/about')
-def about():
-    return "This is the about page"
 
 @routes.route('/logout')
 def logout():
     session.pop("user", None)
-    return "session cleared"
+    return render_template("logout.html")
 
 @routes.route('/disconnect')
 def disc():
     session.pop("cnxn_str", None)
     return "database has been disconnected"
 
-# @routes.route('/home')
-# def home():
-#     return "Welcome to the homepage"
 
-# # render_template takes in the name of the html file in the templates folder
-# # surrounding the url with two slashes allows the user to access that route with or without an ending /
-# @routes.route('/')
-# def landing():
-#     # If you want to pass a value from python to the html template you need to add a parameter with the name of that value in the html document, and assign the value to it
-#     return render_template("test.html", content="hello", number=2)
-
-# @routes.route('/<username>')
-# def user(username):
-#     return f"{username}"
-
-# # url_for takes a string of the name of the function you want to direct to and the other arguments are the parameters you would pass to that function
-# @routes.route('/wrong')
-# def wrong():
-#     return redirect(url_for("user", username="Rico"))

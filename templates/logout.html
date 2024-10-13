@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title%} {% endblock %}</title>
+    <title>Document</title>
 </head>
 <body>
-    {%block content%}
-
-    {%endblock%}
+    <p>Session Cleared</p>
+    <a href="{{url_for('routes.landing')}}"><p>Go To Homepage</p></a>
 </body>
 </html>
